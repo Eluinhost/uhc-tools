@@ -117,6 +117,14 @@
 							r[8].length == 1 &&  // " "
 							r[9].length == 2 && // region
 							/^ - /.test(r[10]);  // " - "
+							
+						if (r[9] != "US" && 
+							r[9] != "EU" && 
+							r[9] != "AS" && 
+							r[9] != "AU" && 
+							r[9] != "SA") {
+							isPerfectMatch = false;
+					    }
                         var date = new Date(0);
                         if (nMonth > 9) {
                             date.setUTCFullYear(2014); // TODO get rid of this hack and be smart
