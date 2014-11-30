@@ -101,7 +101,7 @@
                 }
                 var url = data.data.children[i].data.url;
                 var created_utc = data.data.children[i].data.created_utc;
-                var regex = /(\w*)( +)(\d+)( +)(\d+):(\d+)( +)UTC(.*)/;
+                var regex = /(\w*)( +)(\d+)( +)(\d+):(\d+)( +)UTC( +)(\w{0,2})(.*)/;
                 var r = regex.exec(title);
                 if (r) {
                     var nMonth = parseMonth(r[1]);
@@ -113,8 +113,10 @@
                             r[4].length == 1 && // " "
                             r[5].length == 2 && // "23"  :
                             r[6].length == 2 && // "59"
-                            r[7].length == 1 && // " "   UTC
-                            /^ - /.test(r[8]);  // " - "
+                            r[7].length == 1 && // " " UTC
+							r[8].length == 1 &&  // " "
+							r[9].length == 2 && // region
+							/^ - /.test(r[10]);  // " - "
                         var date = new Date(0);
                         if (nMonth > 9) {
                             date.setUTCFullYear(2014); // TODO get rid of this hack and be smart
