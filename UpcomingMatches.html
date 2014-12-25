@@ -10,9 +10,9 @@
     <a href="http://reddit.com/r/ultrahardcore/"><img style="border:0" src="http://a.thumbs.redditmedia.com/EjZkm0GBBCxT17F0.png" alt="ultra-hardcore" /></a>
     </div>
     <p>(<b>New players</b> should definitely check out the <a href="http://reddit.com/r/ultrahardcore/wiki/playerfaq">PlayerFAQ</a> and <a href="http://reddit.com/r/ultrahardcore/wiki/glossary">Glossary</a> from the <a href="http://reddit.com/r/ultrahardcore/wiki/index">wiki</a>.)</p>
-    <h1>Upcoming UHC matches</h1>
+    <h1>Upcoming matches</h1>
     <p>This page shows upcoming UHC matches from the <a href="http://reddit.com/r/ultrahardcore/">ultrahardcore</a> subreddit.  (Source data: JSONP version of <a href="http://www.reddit.com/r/ultrahardcore/search?q=flair%3AUpcoming_Match&amp;restrict_sr=on&amp;sort=new">this page</a>.)</p>
-    <h3>Matches whose titles were successfully parsed</h3>
+    <h3>Matches from <a href="http://www.reddit.com/r/UHCMatches/">/r/UHCMatches</a></h3>
     <div id="parsedplaceholder"></div>
     <br/>Notes: 
     <ul>
@@ -21,11 +21,12 @@
         <li>Text size indicated how far ahead of time the match was advertised; small text is impromptus posted shortly before the match, large text is matches posted well in advance.
     </ul>
     <noscript>(No data here, because Javascript is disabled on this page for some reason.)</noscript>
-    <h3>Matches whose titles could not be parsed</h3>
-    <div id="unparsedplaceholder"></div>
-    <noscript>(No data here, because Javascript is disabled on this page for some reason.)</noscript>
-    <h3>Some recently completed matches</h3>
+    
+    <h3>Matches from /r/ultrahardcore (soon to be removed)</h3>
     <div id="parsedcompletedplaceholder"></div>
+    <noscript>(No data here, because Javascript is disabled on this page for some reason.)</noscript>
+	<h3>Matches whose titles could not be parsed</h3>
+    <div id="unparsedplaceholder"></div>
     <noscript>(No data here, because Javascript is disabled on this page for some reason.)</noscript>
     <hr/>
     (<a href="https://github.com/dans1988/uhc-tools/blob/master/UHC-UpcomingMatches.html">Source code</a> for this page.  <a href="http://dans1988.github.io/uhc-tools/UHC-UpcomingMatches.html">Self URL</a> of this page.)
@@ -91,9 +92,15 @@
         }
 
         function myfunc(data) {
+			
+			
             var parsed = new Array();
             var unparsed = new Array();
-            var isCompletedMatches = data.data.children.length == 100; // take advantage of 'limit' in reddit API
+            var isCompletedMatches = false; //data.data.children.length == 100; // take advantage of 'limit' in reddit API
+			
+			var subreddit = data.data.children[0].data.subreddit;
+			
+			
             for (var i in data.data.children) {
                 var title = data.data.children[i].data.title;
                 if (title.length > 100) {
@@ -166,19 +173,19 @@
                         + p.title + (p.isPerfectMatch ? "" : "</i>") + "</a></td><td>posted "
                         + Math.floor((p.dateMillis - p.createdMillis) / (1000*60*60)) + " hours ahead</tr>";
                 };
-
-            if (isCompletedMatches) {
-                parsed.reverse();
-                output = "<table>";
+parsedcompletedplaceholder
+            if (subreddit == "UHCMatches") {
+				output = "(Current UTC time is " + currentHours + ":" + currentMinutes + ")<br/><br/><table>";
+                //output = "<table>";
                 parsed.forEach(show);
                 output += "</table>";
-                document.getElementById("parsedcompletedplaceholder").innerHTML = output;
+                document.getElementById("parsedplaceholder").innerHTML = output;
             }
             else {
                 output = "(Current UTC time is " + currentHours + ":" + currentMinutes + ")<br/><br/><table>";
                 parsed.forEach(show);
                 output += "</table>";
-                document.getElementById("parsedplaceholder").innerHTML = output;
+                document.getElementById("parsedcompletedplaceholder").innerHTML = output;
                 output = "<ul>";
                 unparsed.forEach(function (p) {
                     output += "<li><a href='" + p.url + "'><i>" + p.title + "</i></a></li>";
@@ -190,8 +197,8 @@
     </script>
 
     <!-- use reddit JSONP apis to get page data as JSON and call myfunc with it -->
-    <script type="text/javascript" src="http://www.reddit.com/r/ultrahardcore/search.json?q=flair%3AUpcoming_Match&amp;restrict_sr=on&amp;sort=new&amp;limit=500&amp;jsonp=myfunc"></script>
-    <script type="text/javascript" src="http://www.reddit.com/r/ultrahardcore/search.json?q=flair%3ACompleted_Match&amp;restrict_sr=on&amp;sort=new&amp;limit=100&amp;jsonp=myfunc"></script>
+    <script type="text/javascript" src="http://www.reddit.com/r/ultrahardcore/search.json?q=flair%3AUpcoming_Match&amp;restrict_sr=on&amp;sort=new&amp;limit=200&amp;jsonp=myfunc"></script>
+    <script type="text/javascript" src="http://www.reddit.com/r/uhcmatches/search.json?q=flair%3AUpcoming_Match&amp;restrict_sr=on&amp;sort=new&amp;limit=200&amp;jsonp=myfunc"></script>
 
 </body>
 </html>
