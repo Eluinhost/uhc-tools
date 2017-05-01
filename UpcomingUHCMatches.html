@@ -136,7 +136,7 @@
                         date.setUTCHours(+r[5]);
                         date.setUTCMinutes(+r[6]);
                         var dateMillis = date.getTime();
-						if (title.toLowerCase().indexOf("cutclean") < 0 && title.toLowerCase().indexOf("kutklean") <0) {
+						if (title.toLowerCase().indexOf("cutclean") < 0 && title.toLowerCase().indexOf("kutklean") <0 && title.toLowerCase().indexOf("fast smelting") <0 && title.toLowerCase().indexOf("fastsmelt") <0) {
 							parsed.push({ title:title, url:url, month:nMonth, date:+r[3], hour:+r[5], minute:+r[6], dateMillis:dateMillis, createdMillis:created_utc*1000, isPerfectMatch:isPerfectMatch });
 						}
                     }
